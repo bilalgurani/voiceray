@@ -1,0 +1,214 @@
+@use "../styles/variables" as *;
+
+.nav-gradient {
+  background: $gradient-btn;
+  height: .8rem;
+}
+.nav-container {
+  height: auto;
+  width: 100%;
+  position: sticky;
+}
+.nav {
+  padding: 1.8rem 8rem;
+  width: 100%;
+  color: $brand-blue;
+  font-size: 2rem;
+  font-family: $oswald-regular;
+  &__main {
+    padding: 0 0 .8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    color: inherit;
+  }
+  &__logo-wrapper {
+    display: flex;
+    justify-content: flex-start;
+  
+    h4 {
+      font-size: 2rem;
+      font-weight: bold;
+      font-family: $oswald-bold;
+      color: inherit;
+    }
+  }
+  &__link-wrapper {
+    display: flex;
+    justify-content: center;
+    flex: 1 0 0px;
+    
+    a {
+      padding: .6rem 1.2rem;
+      border-radius: 10rem;
+      transition: all .3s ease;
+      color: inherit;
+      &:hover {
+        background-color: $bg-section-alt;
+      }
+    }
+  
+  }
+
+}
+.section-hero {
+  position: relative;
+  // background-color:$white;  
+  // $white-dim: #f3f3f3;
+  // $white: #ffffff;
+  // $ten: 10%;
+  // $nintee: 90%;
+  // $thirty-three: 33%;
+  // background-image:
+  // linear-gradient(67.5deg, $white $ten, transparent $ten),
+  // linear-gradient(157.5deg, $white $ten, transparent $ten),
+  // linear-gradient(67.5deg, transparent $nintee, $white $nintee),
+  // linear-gradient(157.5deg, transparent $nintee, $white $nintee),
+    
+  // linear-gradient(22.5deg, $white $ten, transparent $ten),
+  // linear-gradient(112.5deg, $white $ten, transparent $ten),
+  // linear-gradient(22.5deg, transparent $nintee, $white $nintee),
+  // linear-gradient(112.5deg, transparent $nintee, $white $nintee),
+  
+  // linear-gradient(22.5deg, transparent $thirty-three, $white-dim $thirty-three, $white-dim 36%, transparent 36%, transparent 64%, $white-dim 64%, $white-dim 67%, transparent 67%),
+  // linear-gradient(-22.5deg, transparent $thirty-three, $white-dim $thirty-three, $white-dim 36%, transparent 36%, transparent 64%, $white-dim 64%, $white-dim 67%, transparent 67%),
+  // linear-gradient(112.5deg, transparent $thirty-three, $white-dim $thirty-three, $white-dim 36%, transparent 36%, transparent 64%, $white-dim 64%, $white-dim 67%, transparent 67%),
+  // linear-gradient(-112.5deg, transparent $thirty-three, $white-dim $thirty-three, $white-dim 36%, transparent 36%, transparent 64%, $white-dim 64%, $white-dim 67%, transparent 67%);
+
+  // background-size: 250px 250px;
+  // background-position: 
+  //   -100px 150px, -150px 150px, -150px 100px, -100px 100px,
+  //   -150px 100px, -100px 100px, -100px 150px, -150px 150px,
+  //   0 0, 0 0, 0 0, 0 0;
+  // background-image: url(../assets/images/equalizer.svg);
+  // background-size: cover;
+  // background-position: center center;
+  // background-repeat: no-repeat;
+  // z-index: 1;
+  // width: 100%;
+  // height: 100%;
+  // display: block;
+  // background-color: #000; // Your desired color
+  // mask: url(../assets/images/equalizer.svg) no-repeat center / cover;
+  // -webkit-mask: url(../assets/images/equalizer.svg) no-repeat center / cover;
+}
+.hero-background {
+  position: absolute;
+  top: -10%;
+  left: 10%;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.06;
+}
+.equalizer-bars {
+  stroke: $brand-blue;
+  stroke-width: 0.2;
+  stroke-linecap: round; // Rounded ends
+}
+
+.equalizer-svg {
+  // width: 100px;  // Adjust as needed
+  // height: 100px; // Adjust as needed
+  // OR use percentage
+  width: 60%;
+  height: auto;
+}
+
+.hero {
+  max-width: 130rem;
+  margin: 8rem auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9.6rem;
+  align-items: center;
+  &__text-box {
+    display: flex;
+    flex-direction: column;
+    align-items: self-start;
+    gap: 3.2rem;
+    p {
+      margin-bottom: 2rem;
+    }
+    span {
+      font-size: 1.6rem;
+      color: $text-muted;
+    }
+  }
+ 
+  &__img {
+    width: 100%;
+  }
+}
+.section-feature {
+  text-align: center;
+  background-color: #f8f9fa;
+}
+.feature-heading {
+  color: $brand-blue;
+  font-family: $oswald-regular;
+  margin-bottom: 9.6rem;
+}
+
+.feature {
+  display: grid;
+  column-gap: 6.4rem;
+  grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+}
+
+.audio-card {
+  box-shadow: 0px 2.4rem 4.8rem rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  border-radius: .8rem;
+  margin-bottom: 9.6rem;
+  background-color: $bg-primary;
+  &__info {
+    padding: 1.6rem 2.2rem 2.2rem 2.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    // align-items: start;
+    &-head {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-direction: column;
+      h3 {
+        font-family: $oswald-regular;
+      }
+    }
+  }
+
+  &__meta-info {
+    // background-color: rgb(188, 106, 106);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 1.2rem 0;
+    span {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 1.4rem;
+      svg {
+        fill: $text-body;
+      }
+    }
+  }
+  &__meta-tags {
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+    gap: 1.2rem;
+    span {
+      padding: .6rem 1.2rem;
+      color: $bg-primary;
+      box-shadow: inset 0 0 0 .5px $text-muted;
+      background-color: $text-muted;
+      border-radius: 10rem;
+      font-size: 1.2rem;
+      text-transform: capitalize;
+    }
+  }
+}
