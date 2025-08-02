@@ -298,6 +298,21 @@
   }
 }
 
+@media screen and (max-width: 400px) {
+  .audio-card-detail {
+    width: 100%;
+  }
+  .audio-player {
+    padding: 0;
+  }
+  .controls {
+    padding: .4rem 2rem;
+  }
+  .controls__btns {
+    gap: clamp(0.5rem, 8vw, 4rem);
+  }
+}
+
 @media screen and (max-width: 600px) {
   .audio-card-detail {
     margin: 6rem auto;
@@ -320,3 +335,4 @@
     }
   }
 }
+
