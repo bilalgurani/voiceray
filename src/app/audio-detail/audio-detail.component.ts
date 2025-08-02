@@ -3,6 +3,7 @@ import { Component, ElementRef, ViewChild, OnDestroy, AfterViewInit, ChangeDetec
 import { ActivatedRoute, Params, RouterModule } from '@angular/router';
 import { AudioService } from '../services/audio.service';
 import { Subscription } from 'rxjs';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-audio-detail',
@@ -35,9 +36,28 @@ export class AudioDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   private onAudioEndedBound = this.onAudioEnded.bind(this);
   private audioSub!: Subscription;
 
-  constructor(private cdr: ChangeDetectorRef, private route: ActivatedRoute, private audioService: AudioService) {}
+  constructor(
+    private cdr: ChangeDetectorRef, 
+    private route: ActivatedRoute, 
+    private audioService: AudioService, private meta: Meta, 
+    private titleService: Title) {}
 
   ngOnInit(): void {
+    const title = 'XYZ Taqreer by Ahmed Siraj Umeri Qasmi';
+    const description = '📅 Date: 2 August 2025 | ⏱ Duration: 23:32 | 🎧 Must listen!';
+    const image = 'https://voiceray.com/assets/thumbnails/xyz.jpg';
+    const url = 'https://voiceray.com/taqreer/ahmed-siraj-xyz';
+  
+    this.titleService.setTitle(title);
+    this.meta.updateTag({ name: 'description', content: description });
+  
+    this.meta.updateTag({ property: 'og:title', content: title });
+    this.meta.updateTag({ property: 'og:description', content: description });
+    this.meta.updateTag({ property: 'og:image', content: image });
+    this.meta.updateTag({ property: 'og:url', content: url });
+  
+    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
       this.audioSub = this.audioService.getAudioById(this.id).subscribe(audio => {
@@ -313,6 +333,7 @@ export class AudioDetailComponent implements OnInit, AfterViewInit, OnDestroy {
       navigator.share({
         title: "Dars E Hadees",
         text: message,
+        url: window.location.href
       })
       .then(() => console.log('Shared successfully'))
       .catch((error) => console.error('Error sharing', error));
