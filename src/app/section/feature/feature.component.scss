@@ -8,7 +8,7 @@
 .feature-heading {
   color: $brand-blue;
   font-family: $oswald-regular;
-  margin-bottom: 9.6rem;
+  margin-bottom: 6rem;
 }
 
 .feature {
@@ -70,4 +70,11 @@
       text-transform: capitalize;
     }
   }
+}
+
+@media screen and (max-width: 850px) {
+  .feature-heading {
+    margin-bottom: 4rem;
+  }
+  
 }

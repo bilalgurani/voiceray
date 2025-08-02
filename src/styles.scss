@@ -13,6 +13,11 @@
   text-decoration: none;
 }
 
+::selection {
+  background-color: $light-blue;
+  color: $bg-primary;
+}
+
 html {
   /* font-size: 10px; */
   /* 10px / 16px = 0.625 = 62.5% */
@@ -160,7 +165,7 @@ p {
 }
 
 .section {
-  padding: 4.8rem 0 9.6rem 0;
+  padding: 4rem 0 8rem 0;
 }
 .hr-line {
   border-bottom: .1px solid rgba(129, 136, 169, 0.5);

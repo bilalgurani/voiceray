@@ -3,8 +3,8 @@
 
 .section-hero {
   position: relative;
-  overflow: hidden;
-  min-height: clamp(400px, 70vh, 800px);
+  padding-top: 8rem;
+  min-height: clamp(400px, 65vh, 800px);
   // background-color:$white;  
   // $white-dim: #f3f3f3;
   // $white: #ffffff;
@@ -131,7 +131,17 @@
   }
 
   .section {
-    padding: 0;
+    padding: 8rem 0 0 0;
+  }
+
+  .btn--full {
+    align-self: stretch;
   }
   
+}
+
+@media screen and (max-width: 450px) {
+  .section-hero {
+    min-height: clamp(400px, 60vh, 800px);
+  }
 }

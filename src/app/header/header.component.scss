@@ -5,9 +5,12 @@
   height: .8rem;
 }
 .nav-container {
+  top: 0;
   height: auto;
   width: 100%;
-  position: sticky;
+  position: fixed;
+  background-color: $bg-primary;
+  z-index: 1;
 }
 .nav {
   padding: 1.8rem 8rem;
