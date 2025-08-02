@@ -3,7 +3,6 @@ import { Component, ElementRef, ViewChild, OnDestroy, AfterViewInit, ChangeDetec
 import { ActivatedRoute, Params, RouterModule } from '@angular/router';
 import { AudioService } from '../services/audio.service';
 import { Subscription } from 'rxjs';
-import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-audio-detail',
@@ -39,25 +38,9 @@ export class AudioDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private cdr: ChangeDetectorRef, 
     private route: ActivatedRoute, 
-    private audioService: AudioService, private meta: Meta, 
-    private titleService: Title) {}
+    private audioService: AudioService) {}
 
   ngOnInit(): void {
-    const title = 'XYZ Taqreer by Ahmed Siraj Umeri Qasmi';
-    const description = '📅 Date: 2 August 2025 | ⏱ Duration: 23:32 | 🎧 Must listen!';
-    const image = 'https://voiceray.com/assets/thumbnails/xyz.jpg';
-    const url = 'https://voiceray.com/taqreer/ahmed-siraj-xyz';
-  
-    this.titleService.setTitle(title);
-    this.meta.updateTag({ name: 'description', content: description });
-  
-    this.meta.updateTag({ property: 'og:title', content: title });
-    this.meta.updateTag({ property: 'og:description', content: description });
-    this.meta.updateTag({ property: 'og:image', content: image });
-    this.meta.updateTag({ property: 'og:url', content: url });
-  
-    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
-
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
       this.audioSub = this.audioService.getAudioById(this.id).subscribe(audio => {
@@ -311,29 +294,30 @@ export class AudioDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   shareAudio() {
-    const message = 
-    `🕌 Assalam wa alaikum Wa Rehmatullahi wa Barakatahu!
+    const shareUrl = `▶️ Play audio: ${window.location.href}`
+    const message = `${shareUrl}
 
-    📌 Topic: Taqwa Kya hain, Aur Kaise Parda Kara jae?
-    🎙️ Speaker: Ahmed Siraj Umeri Qasmi
-    📝 Description: This talk explores the importance of living with purpose.
-    📅 Date: 1 Aug 2025
-    ⏱️ Duration: 23:32
+🕌 Assalam wa alaikum Wa Rehmatullahi wa Barakatahu!
 
-    📞 Contact: +91 7019232331
+📌 Topic: Taqwa Kya hain, Aur Kaise Parda Kara jae?
+🎙️ Speaker: Ahmed Siraj Umeri Qasmi Faizabadi
+    • Chairman, Aetedal Trust of Hubli, Karnataka
+    • Chairman, Trust of Falahe Aam, Ayodhya, U.P, India
+📝 Description: Moulana talks about Taqwa and Parda the importance of it.
+📅 Date: 1 Aug 2025
+⏱️ Duration: 21:06 mins
 
-    📲 Join my Telegram channel:*
-    👉 https://t.me/voiceray
+📞 Contact: +91 9620409893
+New WhatsApp No: 0091 8217035914 & 0091 7899372793 
 
-    📲 Join my WhatsApp channel:*
-    👉 https://wa.me/+917019232331
+📲 Join My Telegram Group Link:
+👉 https://t.me/MoulanaAhmedSiraj
 
-    🗒️ Note: Is Taqreer ko zaroor sunein.`;
+🗒️ Note: Is Taqreer ko zaroor sunein.`;
     if (navigator.share) {
       navigator.share({
-        title: "Dars E Hadees",
-        text: message,
-        url: window.location.href
+        title: "Dars E Hadees No. 744",
+        text: message
       })
       .then(() => console.log('Shared successfully'))
       .catch((error) => console.error('Error sharing', error));
