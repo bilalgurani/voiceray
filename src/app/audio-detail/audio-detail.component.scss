@@ -3,7 +3,6 @@
 .audio-player {
   background: $bg-primary;
   color: white;
-  // border-radius: .8rem;
   border-radius: clamp(0.4rem, 1vw, 0.8rem);
   display: flex;
   align-items: center;
@@ -319,29 +318,3 @@
     }
   }
 }
-
-// @media screen and (max-width: 600px) {
-//   .controls {
-//     &__btns {
-//       display: grid;
-//       grid-template-columns: repeat(5, 1fr);
-//       align-content: center;
-//       justify-content: center;
-//     }
-//   }
-
-//   .ctrl-btn:nth-child(1) {
-//     grid-row-start: 2;
-//     grid-column-start: 2;
-//   }
-  
-//   .ctrl-btn:nth-child(7) {
-//     grid-row-start: 2;
-//     grid-column-start: 3;
-//   }
-  
-//   .speed-control {
-//     grid-row-start: 2;
-//     grid-column-start: 4;
-//   }
-// }

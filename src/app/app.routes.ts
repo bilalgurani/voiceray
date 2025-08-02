@@ -9,5 +9,6 @@ export const routes: Routes = [
   {path: '', component: MainComponent, pathMatch: 'full'},
   {path: 'audio/:id', component: AudioDetailComponent},
   {path: 'about', component: AboutComponent},
-  {path: 'speakers', component: SpeakersComponent}
+  {path: 'speakers', component: SpeakersComponent},
+  {path: '**', redirectTo: '', pathMatch: 'full'}
 ];
