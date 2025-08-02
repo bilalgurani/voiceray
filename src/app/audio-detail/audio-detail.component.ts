@@ -290,6 +290,38 @@ export class AudioDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  shareAudio() {
+    const message = 
+    `🕌 Assalam wa alaikum Wa Rehmatullahi wa Barakatahu!
+
+    📌 Topic: Taqwa Kya hain, Aur Kaise Parda Kara jae?
+    🎙️ Speaker: Ahmed Siraj Umeri Qasmi
+    📝 Description: This talk explores the importance of living with purpose.
+    📅 Date: 1 Aug 2025
+    ⏱️ Duration: 23:32
+
+    📞 Contact: +91 7019232331
+
+    📲 Join my Telegram channel:*
+    👉 https://t.me/voiceray
+
+    📲 Join my WhatsApp channel:*
+    👉 https://wa.me/+917019232331
+
+    🗒️ Note: Is Taqreer ko zaroor sunein.`;
+    if (navigator.share) {
+      navigator.share({
+        title: "Dars E Hadees",
+        text: message,
+      })
+      .then(() => console.log('Shared successfully'))
+      .catch((error) => console.error('Error sharing', error));
+    } else {
+      navigator.clipboard.writeText(message);
+      alert('Sharing not supported on this browser');
+    }
+  }
+
   ngOnDestroy() {
     this.cleanup();
     this.audioSub?.unsubscribe();
