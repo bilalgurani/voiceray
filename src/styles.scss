@@ -38,8 +38,13 @@ body {
   font-family: Nunito, sans-serif;
 }
 
-a, a:link, a:visited, 
-button, button:link, button:visited {
+a, a:link, a:visited, a:hover, a:active,
+button, button:link, button:visited, button:hover, button:active {
+  color: inherit;
+  text-decoration: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
   cursor: pointer;
   border: none;
   outline: none;
