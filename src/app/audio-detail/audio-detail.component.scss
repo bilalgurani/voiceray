@@ -102,9 +102,11 @@
           $progress-color var(--progress, 0%),
           $progress-color 100%
       );
-      
-      // Remove transition from slider for smooth dragging
-      transition: none;
+      transition: all .3s $cubic-beziar;
+      &:hover, &:active {
+        transform: scaleY(1.5);
+      }
+  
 
       &::-webkit-slider-thumb {
         -webkit-appearance: none;
