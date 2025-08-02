@@ -49,7 +49,7 @@
       border-radius: 10rem;
       transition: all .3s ease;
       color: inherit;
-      &:hover {
+      &:hover, &:active {
         background-color: $bg-section-alt;
       }
     }
