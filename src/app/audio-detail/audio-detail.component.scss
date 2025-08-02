@@ -299,6 +299,9 @@
 }
 
 @media screen and (max-width: 400px) {
+  .speed-dropdown {
+    left: -130%;
+  }
   .audio-card-detail {
     width: 100%;
   }
@@ -310,6 +313,15 @@
   }
   .controls__btns {
     gap: clamp(0.5rem, 8vw, 4rem);
+    .ctrl-btn:nth-child(1) {
+      order: 3;
+    }
+    .ctrl-btn:nth-child(7) {
+      order: 2;
+    }
+    .speed-control {
+      order: 1;
+    }
   }
 }
 
@@ -321,17 +333,6 @@
     &__btns {
       display: flex;
       flex-wrap: wrap;
-    }
-  }
-  .controls__btns {
-    .ctrl-btn:nth-child(1) {
-      order: 3;
-    }
-    .ctrl-btn:nth-child(7) {
-      order: 2;
-    }
-    .speed-control {
-      order: 1;
     }
   }
 }
