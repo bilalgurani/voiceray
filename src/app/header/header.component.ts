@@ -8,5 +8,13 @@ import { RouterModule } from '@angular/router';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+  isMenuOpen = false;
 
+  scrollToTop(event: Event) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  toggleBurgerMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
 }

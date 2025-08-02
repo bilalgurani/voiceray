@@ -1,9 +1,9 @@
-<header class="nav-container">
+<header class="nav-container" [class.dropdown-open]="isMenuOpen">
   <nav class="nav">
     <div class="nav__main">
       <div class="nav__logo-wrapper">
         <h4>
-          <a routerLink="/">
+          <a routerLink="/" (click)="scrollToTop($event)">
             <img class="nav__logo" src="assets/images/voiceray-logo.webp" alt="Voiceray website logo">
           </a>
         </h4>
