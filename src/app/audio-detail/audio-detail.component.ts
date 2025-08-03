@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild, OnDestroy, AfterViewInit, ChangeDetectorRef, OnInit, HostListener } from '@angular/core';
 import { ActivatedRoute, Params, RouterModule } from '@angular/router';
 import { AudioService } from '../services/audio.service';
-import { Subscription } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-audio-detail',
@@ -24,6 +24,11 @@ export class AudioDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   duration = 0;
   roundedDuration = 0;
   formattedDuration = '0:00';
+
+  isFullScreen = false;
+  @ViewChild('audioPlayerContainer') audioPlayerContainer!: ElementRef;
+  
+  private fullScreenSub!: Subscription;
 
   showSpeedMenu = false;
   speedOptions = [0.5, 'Normal', 1.25, 1.5, 1.75, 2];
@@ -49,10 +54,48 @@ export class AudioDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       })
     });
+
+    this.setupFullScreenListener();
+  }
+
+  private setupFullScreenListener() {
+    this.fullScreenSub = fromEvent(document, 'fullscreenchange').subscribe(() => {
+      this.isFullScreen = !!document.fullscreenElement;
+      this.cdr.detectChanges();
+    });
   }
 
   ngAfterViewInit() {
     this.initializeAudio();
+  }
+
+  toggleFullScreen() {
+    const element = this.audioPlayerContainer.nativeElement;
+    
+    if (!this.isFullScreen) {
+      if (element.requestFullscreen) {
+        element.requestFullscreen();
+      } else if (element.webkitRequestFullscreen) { /* Safari */
+        element.webkitRequestFullscreen();
+      } else if ((element as any).msRequestFullscreen) { /* IE11 */
+        (element as any).msRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  }
+
+  // Add these listeners to detect full-screen changes
+  @HostListener('document:fullscreenchange', ['$event'])
+  @HostListener('document:webkitfullscreenchange', ['$event'])
+  @HostListener('document:mozfullscreenchange', ['$event'])
+  @HostListener('document:MSFullscreenChange', ['$event'])
+  fullscreenchangeHandler() {
+    this.isFullScreen = !!(
+      document.fullscreenElement
+    );
   }
 
   private cleanup() {
@@ -329,6 +372,10 @@ New WhatsApp No: 0091 8217035914 & 0091 7899372793
 
   ngOnDestroy() {
     this.cleanup();
+    this.fullScreenSub?.unsubscribe();
+    if (this.isFullScreen) {
+      this.toggleFullScreen();
+    }
     this.audioSub?.unsubscribe();
   }
 
