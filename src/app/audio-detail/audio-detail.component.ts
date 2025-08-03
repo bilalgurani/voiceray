@@ -55,15 +55,15 @@ export class AudioDetailComponent implements OnInit, AfterViewInit, OnDestroy {
       })
     });
 
-    this.setupFullScreenListener();
+    // this.setupFullScreenListener();
   }
 
-  private setupFullScreenListener() {
-    this.fullScreenSub = fromEvent(document, 'fullscreenchange').subscribe(() => {
-      this.isFullScreen = !!document.fullscreenElement;
-      this.cdr.detectChanges();
-    });
-  }
+  // private setupFullScreenListener() {
+  //   this.fullScreenSub = fromEvent(document, 'fullscreenchange').subscribe(() => {
+  //     this.isFullScreen = !!document.fullscreenElement;
+  //     this.cdr.detectChanges();
+  //   });
+  // }
 
   ngAfterViewInit() {
     this.initializeAudio();
@@ -304,7 +304,9 @@ export class AudioDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+    console.log(`Formatting time: ${minutes}:${seconds < 10 ? '0' + seconds : seconds}`);
+    
+    return `${minutes}:${seconds}`;
   }
 
   toggleSpeedMenu() {

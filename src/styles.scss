@@ -86,15 +86,15 @@ p {
   font-size: clamp(2.5rem, 6vw, 4.4rem);
   line-height: clamp(1.15, 1.2, 1.25);
   margin-bottom: clamp(1.5rem, 3vw, 2.4rem);
-  
+  color: $brand-blue;
+  font-family: $oswald-regular;
   // Better spacing for secondary headings
-  color: $text-primary;
   font-weight: 600;
 }
 .heading-tertiary {
   text-align: center;
   font-size: clamp(2rem, 4vw, 3rem);
-  color: $text-primary;
+  color: $brand-blue;
   line-height: clamp(1.2, 1.25, 1.3);
   margin-bottom: clamp(1rem, 2vw, 1.6rem);
   
@@ -166,7 +166,8 @@ p {
 }
 
 .section {
-  padding: 4rem 0 8rem 0;
+  text-align: center;
+  padding: 4rem 0 0 0;
 }
 .hr-line {
   border-bottom: .1px solid rgba(129, 136, 169, 0.5);
@@ -182,7 +183,6 @@ p {
 .speaker:hover, .speaker:active {
   color: $light-blue
 }
-
 
 .svg-icon {
   fill: $brand-blue;

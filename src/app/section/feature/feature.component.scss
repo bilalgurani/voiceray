@@ -2,13 +2,7 @@
 
 
 .section-feature {
-  text-align: center;
   background-color: #f8f9fa;
-}
-.feature-heading {
-  color: $brand-blue;
-  font-family: $oswald-regular;
-  margin-bottom: 6rem;
 }
 
 .feature {
@@ -70,11 +64,4 @@
       text-transform: capitalize;
     }
   }
-}
-
-@media screen and (max-width: 850px) {
-  .feature-heading {
-    margin-bottom: 4rem;
-  }
-  
 }

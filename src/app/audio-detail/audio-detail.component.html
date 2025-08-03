@@ -2,7 +2,7 @@
   <div class="audio-player" #audioPlayerContainer>
     <div class="audio-card-detail">
       <div class="audio-card-detail-container">
-        <img class="audio-card-detail__thumbnail" src="../assets/images/hero.webp" alt="">
+        <img class="audio-card-detail__thumbnail" src="assets/images/moulana-siraj.webp" alt="">
       <div class="audio-card-detail__info">
         <div class="audio-card-detail__meta-tags">
           <span>Taqwa</span>
@@ -24,7 +24,8 @@
           type="range" 
           min="0"
           [value]="currentTime"
-          [max]="roundedDuration || 100"
+          [max]="duration || 100"
+          step="0.1"
           (input)="onSliderInput($event)"
           (input)="onSliderChange($event)"/>
           <div class="controls__time-container">
