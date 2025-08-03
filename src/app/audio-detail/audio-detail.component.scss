@@ -190,11 +190,12 @@
     flex-wrap: wrap;
     gap: clamp(0.5rem, 2vw, 1rem);
   }
+
   &__btns-row {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: clamp(0.5rem, 4vw, 4rem);
+    gap: clamp(0.5rem, 6.4vw, 4rem);
   }
 }
 
@@ -290,6 +291,10 @@
 
 
 @media screen and (max-width: 600px) {
+  .svg-icon {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
   .audio-card-detail {
     margin: 6rem auto;
   }
