@@ -38,12 +38,16 @@
   }
 }
 
+.audio {
+  padding: 2rem 0 2rem;
+}
+
 .audio-card-detail {
   width: min(90%, 60rem);
   background-color: $bg-primary;
   overflow: hidden;
   box-shadow: $box-shadow;
-  margin: 10rem auto;
+  margin: 8rem auto 2rem;
   border-radius: .8rem;
   
   &__meta-tags {
@@ -107,7 +111,7 @@
   flex-direction: column;
   gap: clamp(1rem, 3vw, 2rem);
   margin-bottom: clamp(0.5rem, 2vw, 1rem);
-  padding: clamp(1rem, 2vw, 1.2rem) clamp(3rem, 5vw, 4rem);
+  padding: clamp(1rem, 2vw, 1.2rem) clamp(3rem, 5vw, 2rem);
   container-type: inline-size;
 
   &__progress-container {
@@ -182,56 +186,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     flex-wrap: wrap;
     gap: clamp(0.5rem, 2vw, 1rem);
   }
-}
-
-.svg-icon {
-    fill: $brand-blue;
-    width: clamp(1.5rem, 3vw, 2rem);
-    height: clamp(1.5rem, 3vw, 2rem);
-    transition: all .3s $cubic-beziar;
-    cursor: pointer;
-    &:hover, &:active {
-      transform: scale(1.05);
-      fill: $light-blue;
-    }
-}
-
-.toggleActive {
-  fill: $light-blue !important;
-}
-
-.ctrl-btn {
-  background-color: transparent;
-  padding: clamp(0.8rem, 2vw, 1.2rem);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all .3s $cubic-beziar;
-}
-
-.ctrl-btn-round {
-  height: clamp(3rem, 6vw, 4rem);
-  width: clamp(3rem, 6vw, 4rem);
-  border-radius: 100rem;
-  box-shadow: inset 0 0 0 .5px $text-muted;
-}
-
-.ctrl-btn-big {
-  height: clamp(4rem, 8vw, 5rem);
-  width: clamp(4rem, 8vw, 5rem);
-}
-
-.ctrl-btn-round:hover, .ctrl-btn-round:active {
-  background-color: $bg-section-alt;
-  transform: scale(1.05);
-}
-
-.ctrl-btn-round:hover svg, .ctrl-btn-round:active svg {
-  fill: $light-blue;
+  &__btns-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.5rem, 4vw, 4rem);
+  }
 }
 
 .speed-control {
@@ -321,5 +285,61 @@
     width: 2.4rem;
     height: 2.4rem;
     fill: $bg-primary;
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  .svg-icon {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+  .audio-card-detail {
+    margin: 6rem auto;
+  }
+}
+
+/* Mobile-specific styles */
+@media (max-width: 767px) {
+  .audio-card-detail-container {
+    width: 100%;
+    height: 100%;
+    
+    img, audio, .audio-card-detail__info {
+      max-width: 100%;
+    }
+  }
+  
+  .audio-player:fullscreen {
+    padding: 1rem;
+    
+    .audio-card-detail {
+      width: 95%;
+      margin: 0;
+      
+      &__thumbnail {
+        max-height: 40vh;
+      }
+    }
+    
+  }
+}
+
+// Media Queries
+@media screen and (max-width: 400px) {
+  .controls {
+    padding: 0;
+  }
+  .speed-dropdown {
+    left: -130%;
+  }
+  .audio-card-detail {
+    width: 100%;
+  }
+  .audio-player {
+    padding: 0;
+  }
+  .controls {
+    padding: .4rem 2rem;
   }
 }

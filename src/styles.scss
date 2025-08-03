@@ -184,75 +184,49 @@ p {
 }
 
 
-// Media Queries
-@media screen and (max-width: 400px) {
-  .speed-dropdown {
-    left: -130%;
-  }
-  .audio-card-detail {
-    width: 100%;
-  }
-  .audio-player {
-    padding: 0;
-  }
-  .controls {
-    padding: .4rem 2rem;
-  }
-  .controls__btns {
-    gap: clamp(0.5rem, 8vw, 4rem);
-    .ctrl-btn:nth-child(1) {
-      order: 3;
-    }
-    .ctrl-btn:nth-child(7) {
-      order: 2;
-    }
-    .speed-control {
-      order: 1;
-    }
+.svg-icon {
+  fill: $brand-blue;
+  width: clamp(1.5rem, 3vw, 2.8rem);
+  height: clamp(1.5rem, 3vw, 2.8rem);
+  transition: all .3s $cubic-beziar;
+  cursor: pointer;
+  &:hover, &:active {
+    transform: scale(1.05);
+    fill: $light-blue;
   }
 }
 
-@media screen and (max-width: 600px) {
-  .svg-icon {
-    width: 2.6rem;
-    height: 2.6rem;
-  }
-  .audio-card-detail {
-    margin: 6rem auto;
-  }
-  .controls {
-    &__btns {
-      display: flex;
-      flex-wrap: wrap;
-    }
-  }
+.toggleActive {
+fill: $light-blue !important;
 }
 
-/* Mobile-specific styles */
-@media (max-width: 767px) {
-  .audio-card-detail-container {
-    width: 100%;
-    height: 100%;
-    
-    img, audio, .audio-card-detail__info {
-      max-width: 100%;
-    }
-  }
-  
-  .audio-player:fullscreen {
-    padding: 1rem;
-    
-    .audio-card-detail {
-      width: 95%;
-      margin: 0;
-      
-      &__thumbnail {
-        max-height: 40vh;
-      }
-    }
-    
-    .controls {
-      padding: 1rem;
-    }
-  }
+.ctrl-btn {
+background-color: transparent;
+padding: clamp(0.8rem, 2vw, 1.2rem);
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all .3s $cubic-beziar;
+}
+
+.ctrl-btn-round {
+height: clamp(3rem, 6vw, 4.6rem);
+width: clamp(3rem, 6vw, 4.6rem);
+border-radius: 100rem;
+box-shadow: inset 0 0 0 .5px $text-muted;
+}
+
+.ctrl-btn-big {
+height: clamp(4rem, 8vw, 5rem);
+width: clamp(4rem, 8vw, 5rem);
+}
+
+.ctrl-btn-round:hover, .ctrl-btn-round:active {
+background-color: $bg-section-alt;
+transform: scale(1.05);
+}
+
+.ctrl-btn-round:hover svg, .ctrl-btn-round:active svg {
+fill: $light-blue;
 }
