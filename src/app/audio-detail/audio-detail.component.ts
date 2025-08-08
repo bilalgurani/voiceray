@@ -304,9 +304,7 @@ export class AudioDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
-    console.log(`Formatting time: ${minutes}:${seconds < 10 ? '0' + seconds : seconds}`);
-    
-    return `${minutes}:${seconds}`;
+    return `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
   }
 
   toggleSpeedMenu() {

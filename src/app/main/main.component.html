@@ -1,5 +1,33 @@
 <main>
   <app-hero></app-hero>
   <app-feature id="features"></app-feature>
+  <svg class="texture-filter">
+    <filter id="advanced-texture">
+      <feTurbulence
+        result="noise"
+        numOctaves="3"
+        baseFrequency="0.7"
+        type="fractalNoise"
+      ></feTurbulence>
+      <feSpecularLighting
+        result="specular"
+        lighting-color="#fff"
+        specularExponent="20"
+        specularConstant="0.8"
+        surfaceScale="2"
+        in="noise"
+      >
+        <fePointLight z="100" y="50" x="50"></fePointLight>
+      </feSpecularLighting>
+      <feComposite
+        result="litNoise"
+        operator="in"
+        in2="SourceGraphic"
+        in="specular"
+      ></feComposite>
+      <feBlend mode="overlay" in2="litNoise" in="SourceGraphic"></feBlend>
+    </filter>
+  </svg>
   <app-why-voiceray id="why-voiceray"></app-why-voiceray>
+  <app-footer></app-footer>
 </main>
