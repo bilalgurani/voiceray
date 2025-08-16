@@ -146,7 +146,6 @@ p {
 
 .btn, .btn:link, .btn:visited {
   border-radius: .8rem;
-  background: $gradient-btn;
   background-size: 200%;
   background-position: left;
   padding: 1.5rem 4.5rem;
@@ -155,7 +154,14 @@ p {
   font-family: $oswald-bold;
   color: $bg-primary;
   transition: all 0.6s $cubic-beziar;
+}
 
+.btn--full {
+  background: $gradient-btn;
+}
+
+.btn--cancel {
+  background-color: $color-red;
 }
 
 .btn:hover, .btn:active {
@@ -163,6 +169,7 @@ p {
   box-shadow: $box-shadow;
   transform: scale(1.05);
 }
+
 
 .section {
   text-align: center;
