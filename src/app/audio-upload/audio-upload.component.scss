@@ -184,10 +184,30 @@
 
 .error-msg {
   font-size: 1.6rem;
-  color: #ef4444;
+  color: $color-red;
+}
+.tags-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 
-.disable-btn {
+.tag {
+  font-size: 1.6rem;
+  padding: .4rem 1.2rem;
+  background-color: $brand-blue;
+  color: $bg-primary;
+  border-radius: .8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.tag-remove {
+  color: $color-red;
+}
+.tag-text {
   
-  cursor: not-allowed;
 }

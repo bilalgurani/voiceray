@@ -30,9 +30,12 @@ export class AudioUploadComponent {
     audio: false
   };
 
+  tagList: string[] = [];
+  tagsInputValue: string = '';
+
   audioUpload = new FormGroup({
     topic: new FormControl('', Validators.required),
-    speaker: new FormControl('', Validators.required),
+    speaker: new FormControl('', [Validators.required, Validators.maxLength(40)]),
     tags: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
     thumbnail: new FormControl<File | null>(null, Validators.required),
@@ -64,19 +67,20 @@ export class AudioUploadComponent {
   }
   
   isFormValid() {
+    console.log(this.audioUpload.invalid || !this.hasFile('image') || !this.hasFile('audio'));
+    
     return this.audioUpload.invalid || !this.hasFile('image') || !this.hasFile('audio')
   }
   
 
   async onSubmit() {
+    console.log("asdfs");
+    
     if (!this.audioUpload.valid) return;
 
     const formValue = this.audioUpload.value;
 
-    const tagsArray = (formValue.tags || '')
-    .split(',')
-    .map(tag => tag.trim())
-    .filter(tag => tag.length > 0);
+    const tagsArray = this.tagList;
 
     const formData = new FormData();
 
@@ -103,6 +107,9 @@ export class AudioUploadComponent {
     formData.forEach((value, key) => {
       console.log(key, value);
     });
+
+    console.log("on submit");
+    
 
     this.audioService.saveAudioMetadata(formData).subscribe({
       next: (response: any) => {
@@ -214,7 +221,56 @@ export class AudioUploadComponent {
     }
   }
 
+  onKeyDown(event: KeyboardEvent): void {
+    if (event.key === ',' || event.key === "Enter") {
+      event.preventDefault();
+      this.addTag();
+    }
 
+    if (event.key === 'Backspace' && this.tagsInputValue === '' && this.tagList.length > 0) {
+      this.removeTag(this.tagList.length - 1);
+    }
+  }
+
+  onInput(event: any): void {
+    const value = event.target.value;
+
+    if (value.includes(',')) {
+      const textBeforeComma = value.split(',')[0].trim();
+
+      if (textBeforeComma) {
+        this.tagList.push(textBeforeComma);
+      }
+
+      const remainingText = value.split(',').slice(1).join(',').trim();
+      this.tagsInputValue = remainingText;
+
+      if (remainingText.includes(',')) {
+        setTimeout(() => this.onInput({ target: { value: remainingText } }));
+      }
+
+    }
+  }
+
+  addTag(): void {
+    const trimmedValue = this.tagsInputValue.trim();
+    if (trimmedValue && !this.tagList.includes(trimmedValue)) {
+      this.tagList.push(trimmedValue);
+      this.tagsInputValue = '';
+    }
+  }
+
+  private updateTagsFormControl(): void {
+    // Update the form control value with current tags
+    const tagsString = this.tagList.join(',');
+    this.audioUpload.patchValue({
+      tags: tagsString || ''
+    });
+  }
+
+  removeTag(index: number): void {
+    this.tagList.splice(index, 1);
+  }
 
   private resetForm(): void {
     this.audioUpload.reset();

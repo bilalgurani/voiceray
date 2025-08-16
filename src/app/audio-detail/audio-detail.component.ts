@@ -35,9 +35,12 @@ export class AudioDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedSpeed: number | string = 'Normal';
 
   id!: number;
-  selectedAudio: any;
+  selectedAudio: any = null;
   audioUrl: string | undefined;
   thumbnailUrl: string | undefined;
+
+  isLoading = true;
+  hasError = false;
 
   private onAudioEndedBound = this.onAudioEnded.bind(this);
   private audioSub!: Subscription;
@@ -50,35 +53,37 @@ export class AudioDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {      
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
-      console.log(this.id);
+
+      this.isLoading = true;
+      this.hasError = false;
       
-      this.audioSub = this.audioService.getAudioById(this.id).subscribe(audio => {
-        if (audio) {
-          
-          this.selectedAudio = audio;
-          setTimeout(() => this.initializeAudio());
+      this.audioSub = this.audioService.getAudioById(this.id).subscribe({
+        next: (audio) => {
+          if (audio) {
+            this.selectedAudio = audio;
+            this.isLoading = false;
+            this.cdr.detectChanges();
+            setTimeout(() => this.initializeAudio());
+          } else {
+            this.hasError = true;
+            this.isLoading = false;
+            this.cdr.detectChanges();
+          }
+        },
+        error: (error) => {
+          console.error('Error loading audio:', error);
+          this.hasError = true;
+          this.isLoading = false;
+          this.cdr.detectChanges();
         }
       })
     });
-
-    // this.audioService.getAudioFile().subscribe((data) => {
-    //   console.log(data);
-      
-    //   this.audioUrl = URL.createObjectURL(data);
-    // });
-
-    // this.setupFullScreenListener();
   }
 
-  // private setupFullScreenListener() {
-  //   this.fullScreenSub = fromEvent(document, 'fullscreenchange').subscribe(() => {
-  //     this.isFullScreen = !!document.fullscreenElement;
-  //     this.cdr.detectChanges();
-  //   });
-  // }
-
   ngAfterViewInit() {
-    this.initializeAudio();
+    if (this.selectedAudio) {
+      this.initializeAudio();
+    }
   }
 
   toggleFullScreen() {

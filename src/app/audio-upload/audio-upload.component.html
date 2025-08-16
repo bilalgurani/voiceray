@@ -9,14 +9,33 @@
       
       <div class="input-container">
         <label for="speaker">Speaker</label>
-        <input maxlength="30" placeholder="Enter Speaker name" type="text" name="speaker" id="speaker" formControlName="speaker">  
-        <span *ngIf="speaker?.touched && speaker?.invalid" class="error-msg">Speaker Name is required!</span>
+        <input maxlength="40" placeholder="Enter Speaker name" type="text" name="speaker" id="speaker" formControlName="speaker">  
+        <span *ngIf="speaker?.touched && speaker?.invalid" class="error-msg">Speaker is required!</span>
       </div>
       
       <div class="input-container">
         <label for="tags">Tags</label>
-        <input maxlength="30" placeholder="Enter Tags separated by comma (,)" type="text" name="tags" id="tags" formControlName="tags">
-        <span *ngIf="tags?.touched && tags?.invalid" class="error-msg">Tags are required!</span>
+        <input maxlength="30" 
+        placeholder="Enter Tags separated by comma (,)" 
+        type="text" name="tags" 
+        id="tags" 
+        formControlName="tags"
+        [value]="tagsInputValue"
+        (keydown)="onKeyDown($event)"
+        (input)="onInput($event)"
+        #tagsInput
+        >
+        <div class="tags-container" *ngIf="tagList.length > 0">
+          <div class="tag" *ngFor="let tag of tagList; let i = index">
+            <span class="tag-text">{{ tag }}</span>
+            <button class="tag-remove" (click)="removeTag(i)" type="button">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M9 3L3 9M3 3L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <span *ngIf="tags?.touched && tags?.invalid && tagList.length === 0" class="error-msg">Tags are required!</span>
       </div>
     
       <div class="input-container">
@@ -132,7 +151,6 @@
       <button 
         class="btn btn--full" 
         type="submit"
-        [ngClass]="{'disable-btn': isFormValid()}"
         [disabled]="isFormValid()">
         Save
       </button>

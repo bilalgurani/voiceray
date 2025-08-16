@@ -1,8 +1,14 @@
 <div class="audio">
-  <div class="audio-player" #audioPlayerContainer>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>Loading audio...</p>
+  </div>
+
+  <div *ngIf="selectedAudio && !isLoading && !hasError" class="audio-player" #audioPlayerContainer>
     <div class="audio-card-detail">
       <div class="audio-card-detail-container">
-        <img class="audio-card-detail__thumbnail" [src]="selectedAudio.thumbnailUrl" alt="">
+        <img class="audio-card-detail__thumbnail" [src]="selectedAudio.thumbnailUrl" [alt]="selectedAudio.topic">
       <div class="audio-card-detail__info">
         <div class="audio-card-detail__meta-tags">
           <span *ngFor="let tag of selectedAudio.tags">{{ tag }}</span>
