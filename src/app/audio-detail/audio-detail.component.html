@@ -2,19 +2,17 @@
   <div class="audio-player" #audioPlayerContainer>
     <div class="audio-card-detail">
       <div class="audio-card-detail-container">
-        <img class="audio-card-detail__thumbnail" src="assets/images/moulana-siraj.webp" alt="">
+        <img class="audio-card-detail__thumbnail" [src]="selectedAudio.thumbnailUrl" alt="">
       <div class="audio-card-detail__info">
         <div class="audio-card-detail__meta-tags">
-          <span>Taqwa</span>
-          <span>Students</span>
+          <span *ngFor="let tag of selectedAudio.tags">{{ tag }}</span>
         </div>
         <div class="audio-card-detail__info-head">
-          <h3 class="heading-tertiary">Taqwa Kya hain, Aur Kaise Parda Kara jae?</h3>
-          <a [routerLink]="['/speakers', 'moulanasiraj']" class="speaker">by Moulana Ahmed Siraj</a>
+          <h3 class="heading-tertiary">{{ selectedAudio.topic }}</h3>
+          <a [routerLink]="['/speakers', 'moulanasiraj']" class="speaker">by {{ selectedAudio.speakerName }}</a>
         </div>
       </div>
       <audio #audioRef>
-        <source src="assets/siraj-moulana.mp3" type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
       <div class="controls">

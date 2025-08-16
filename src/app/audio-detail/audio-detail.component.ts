@@ -36,6 +36,8 @@ export class AudioDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
   id!: number;
   selectedAudio: any;
+  audioUrl: string | undefined;
+  thumbnailUrl: string | undefined;
 
   private onAudioEndedBound = this.onAudioEnded.bind(this);
   private audioSub!: Subscription;
@@ -45,15 +47,25 @@ export class AudioDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute, 
     private audioService: AudioService) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {      
     this.route.params.subscribe((params: Params) => {
-      this.id = +params['id'];
+      this.id = params['id'];
+      console.log(this.id);
+      
       this.audioSub = this.audioService.getAudioById(this.id).subscribe(audio => {
         if (audio) {
+          
           this.selectedAudio = audio;
+          setTimeout(() => this.initializeAudio());
         }
       })
     });
+
+    // this.audioService.getAudioFile().subscribe((data) => {
+    //   console.log(data);
+      
+    //   this.audioUrl = URL.createObjectURL(data);
+    // });
 
     // this.setupFullScreenListener();
   }
@@ -106,7 +118,11 @@ export class AudioDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private initializeAudio() {
+    if (!this.audioRef || !this.selectedAudio) return;
+  
     const audio = this.audioRef.nativeElement;
+    audio.src = this.selectedAudio.audioUrl;
+    audio.load();
 
     audio.addEventListener('ended', this.onAudioEndedBound);
     

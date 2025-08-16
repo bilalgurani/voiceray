@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AudioService } from '../../services/audio.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-feature',
@@ -8,7 +10,27 @@ import { RouterModule } from '@angular/router';
   templateUrl: './feature.component.html',
   styleUrl: './feature.component.scss'
 })
-export class FeatureComponent {
+export class FeatureComponent implements OnInit {
+  private audioService = inject(AudioService);
+  
+  private subscription: Subscription = new Subscription();
+
+  audioUrl: any;
+
+  ngOnInit(): void {
+    console.log("asdf");
+    
+    this.subscription.add(
+      this.audioService.getBackBlaze().subscribe({
+        next: (blob) => {
+          this.audioUrl = URL.createObjectURL(blob);
+          console.log("Audio URL created:", this.audioUrl); // Log here
+        },
+        error: (error) => console.error('Error loading audio:', error)
+      })
+    );
+  }
+
 
   cardData = [
     {
@@ -163,4 +185,11 @@ export class FeatureComponent {
     }
   ];
   
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    if (this.audioUrl?.startsWith('blob:')) {
+      URL.revokeObjectURL(this.audioUrl);
+    }
+  }
+
 }
