@@ -178,7 +178,7 @@ export class FeatureComponent implements OnInit {
   // ];
 
   fetchAllMetadata() {
-    this.audioService.getAllMetadata().subscribe((data) => {
+    this.audioService.loadAllMetadata().subscribe((data) => {
       this.cardData = data;
     })
   }

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { AudioCard } from '../model/audio-details.model';
-import { Observable, of } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -8,16 +8,39 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AudioService {
   private http = inject(HttpClient);
+  private metadataLoaded = false;
+  allMetadata: any;
 
   getAudioById(id: number): Observable<any> {
+    if (this.metadataLoaded) {
+      const audio = this.allMetadata.find((item: any) => item.id === id);
+      if (audio) {
+        return of(audio)
+      }
+    }
+    
     return this.http.get(`https://voiceray-service.onrender.com/api/audio/${id}`)
   }
 
-  getAllMetadata(): Observable<any> {
-    return this.http.get('https://voiceray-service.onrender.com/api/audio/allMetadata');
+  loadAllMetadata(): Observable<any[]> {
+    if (this.allMetadata) {
+      return of(this.allMetadata);
+    }
+    return this.http.get('https://voiceray-service.onrender.com/api/audio/allMetadata').pipe(
+      tap((metadata: any) => {
+        this.allMetadata = metadata;
+        this.metadataLoaded = true;
+      }),
+      catchError(() => of([]))
+    );
   }
 
   saveAudioMetadata(formData: FormData) {
-    return this.http.post("https://voiceray-service.onrender.com/api/audio/upload", formData)
+    return this.http.post("https://voiceray-service.onrender.com/api/audio/upload", formData).pipe(
+      tap(() => {
+        this.metadataLoaded = false;
+        this.allMetadata = [];
+      })
+    )
   }
 }

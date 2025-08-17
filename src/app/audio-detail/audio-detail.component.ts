@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild, OnDestroy, AfterViewInit, ChangeDetectorRef, OnInit, HostListener } from '@angular/core';
 import { ActivatedRoute, Params, RouterModule } from '@angular/router';
 import { AudioService } from '../services/audio.service';
-import { fromEvent, Subscription } from 'rxjs';
+import { Observable, of, Subscription, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-audio-detail',
@@ -50,34 +50,64 @@ export class AudioDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute, 
     private audioService: AudioService) {}
 
-  ngOnInit(): void {      
-    this.route.params.subscribe((params: Params) => {
-      this.id = params['id'];
+  ngOnInit(): void {   
+    this.route.params.pipe(
+      switchMap((params: Params): Observable<any> => {
+        this.id = params['id'];
+        this.isLoading = true;
 
-      this.isLoading = true;
-      this.hasError = false;
-      
-      this.audioSub = this.audioService.getAudioById(this.id).subscribe({
-        next: (audio) => {
-          if (audio) {
-            this.selectedAudio = audio;
-            this.isLoading = false;
-            this.cdr.detectChanges();
-            setTimeout(() => this.initializeAudio());
-          } else {
-            this.hasError = true;
-            this.isLoading = false;
-            this.cdr.detectChanges();
-          }
-        },
-        error: (error) => {
-          console.error('Error loading audio:', error);
-          this.hasError = true;
-          this.isLoading = false;
-          this.cdr.detectChanges();
+        const cachedAudio = this.audioService.allMetadata.find((a: any) => a.id === this.id);
+        if (cachedAudio) {
+          return of(cachedAudio);
         }
+        return this.audioService.getAudioById(this.id);
       })
+    ).subscribe({
+      next: (audio) => {
+        this.selectedAudio = audio;
+        this.isLoading = false;
+        this.cdr.detectChanges();
+        setTimeout(() => this.initializeAudio());
+      },
+      error: (error) => {
+        console.error('Error loading audio:', error);
+        this.hasError = true;
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      }
     });
+    // this.route.params.subscribe((params: Params) => {
+    //   this.id = params['id'];
+
+    //   this.isLoading = true;
+    //   this.hasError = false;
+
+    //   const cachedAudio = this.audioService.allMetadata.find((a: any) => a.id === this.id);
+    //   if (cachedAudio) {
+    //     return of(cachedAudio);
+    //   }
+      
+    //   this.audioSub = this.audioService.getAudioById(this.id).subscribe({
+    //     next: (audio) => {
+    //       if (audio) {
+    //         this.selectedAudio = audio;
+    //         this.isLoading = false;
+    //         this.cdr.detectChanges();
+    //         setTimeout(() => this.initializeAudio());
+    //       } else {
+    //         this.hasError = true;
+    //         this.isLoading = false;
+    //         this.cdr.detectChanges();
+    //       }
+    //     },
+    //     error: (error) => {
+    //       console.error('Error loading audio:', error);
+    //       this.hasError = true;
+    //       this.isLoading = false;
+    //       this.cdr.detectChanges();
+    //     }
+    //   })
+    // });
   }
 
   ngAfterViewInit() {
