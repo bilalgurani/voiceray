@@ -5,6 +5,7 @@ import { SpeakersComponent } from './speakers/speakers.component';
 import { MainComponent } from './main/main.component';
 import { AudioDetailComponent } from './audio-detail/audio-detail.component';
 import { AudioUploadComponent } from './audio-upload/audio-upload.component';
+import { LoginComponent } from './login/login.component';
 
 export const routes: Routes = [
   {path: '', component: MainComponent, pathMatch: 'full'},
@@ -12,5 +13,6 @@ export const routes: Routes = [
   {path: 'about', component: AboutComponent},
   {path: 'speakers', component: SpeakersComponent},
   {path: 'admin', component: AudioUploadComponent},
+  {path: 'login', component: LoginComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'}
 ];

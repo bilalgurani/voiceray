@@ -1,0 +1,56 @@
+<div class="login-page">
+  <form class="login">
+    <div class="login__left">
+      <div class="login__left--header">
+        <a routerLink="/">
+          <img loading="lazy" src="assets/images/voiceray-logo.webp" alt="Voiceray logo">
+        </a>
+        <a routerLink="/" class="btn btn--full">
+          <span>Create Account</span>
+        </a>
+      </div>
+      <img loading="lazy" class="login__left--img" src="assets/images/voiceray-login-left.png">
+      <div class="login__left--back-home">
+        <a routerLink="/" class="btn btn--full">
+          <span>Back Home</span>
+        </a>
+      </div>
+    </div>
+    <div class="login__right">
+      <div class="login__right--form-title">
+        <h2 class="heading-secondary">Login</h2>
+        <p>Sign into to upload Audio</p>
+      </div>
+      <div class="login__right--row">
+        <div class="login__right--input">
+          <label for="email">Email</label>
+          <input type="email" name="email" id="email" placeholder="bilal@gmail.com">
+        </div>
+        <div class="login__right--input">
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password">
+        </div>
+        <div class="login__right--wrapper">
+          <div class="checkbox-wrapper">
+            <div class="input-box">
+              <input type="checkbox" id="remember" name="remember">
+              <label for="remember">Remember Me</label>
+            </div>
+            <div class="forget-btn">
+              <a href="">Forgot Password?</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="login__right--or">
+        <h4>
+          <span>OR</span>
+        </h4>
+      </div> -->
+      <p class="login__right--subtext">
+        Don't have an account? 
+        <a href="">Create an Account</a>
+      </p>
+    </div>
+  </form>
+</div>

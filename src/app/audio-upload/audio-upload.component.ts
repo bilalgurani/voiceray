@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AudioService } from '../services/audio.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 interface UploadedFile {
   file: File;
@@ -19,6 +20,7 @@ interface UploadedFile {
 export class AudioUploadComponent {
 
   private audioService = inject(AudioService);
+  private router = inject(Router);
 
   uploadedFiles: { [key: string]: UploadedFile | null } = {
     image: null,
@@ -105,6 +107,7 @@ export class AudioUploadComponent {
 
     this.audioService.saveAudioMetadata(formData).subscribe({
       next: (response: any) => {
+        this.router.navigate(['/']);
         this.resetForm();
       }, 
       error: (err: any) => {

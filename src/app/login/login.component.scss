@@ -1,0 +1,125 @@
+@use "../../styles/variables" as *;
+
+.login-page {
+  padding: 14rem 0;
+  height: 100vh;
+  width: 100vw;
+}
+
+.login {
+  font-size: 1.6rem;
+  width: 117rem;
+  display: flex;
+  margin: auto;
+  border-radius: .8rem;
+  overflow: hidden;
+  box-shadow: $box-shadow;
+  &__left {
+    width: 100%;
+    // background-color: $bg-section-alt;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5rem;
+
+    &--header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      img {
+        height: 6rem;
+      }
+    }
+  }
+  &__right {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 7rem 8.5rem;
+    justify-content: center;
+    &--form-title {
+      p {
+        margin-bottom: 4rem;
+      }
+    }
+    &--row {
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+    }
+    &--or {
+      h4 {
+        border-top: 1px dashed $dark-blue;
+        text-align: center;
+        font-weight: 600;
+      }
+      span {
+        font-size: 1.6rem;
+        text-transform: uppercase;
+        display: inline-block;
+        padding: 0 2.5rem;
+        background-color: white;
+        position: relative;
+        top: -.9rem;
+        color: $light-blue;
+      }
+    }
+    &--input {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      label {
+        display: inline-block;
+        margin-bottom: 1rem;
+      }
+      input {
+        font-size: inherit;
+        max-width: 100%;
+        padding-left: 2rem;
+        height: 6rem;
+        border: 1px solid $brand-blue;
+        border-radius: .8rem;
+        margin-bottom: 1.6rem;
+        &::placeholder {
+          color: #b5b5b5;
+        }
+      }
+    }
+    &--wrapper {
+      .checkbox-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 4rem;
+      }
+      .input-box {
+        display: flex;
+        align-items: center;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .forget-btn {
+        a {
+          color: $light-blue;
+          transition: all .3s $cubic-beziar;
+          &:hover {
+            color: $dark-blue;
+          }
+        }
+      }
+    }
+    &--subtext {
+      font-size: 1.8rem;
+      text-align: center;
+      a {
+        color: $light-blue;
+        transition: all .3s $cubic-beziar;
+        &:hover {
+          color: $dark-blue;
+        }
+      }
+    }
+  }
+}

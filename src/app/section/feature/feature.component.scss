@@ -23,12 +23,26 @@
   border-radius: .8rem;
   margin-bottom: 9.6rem;
   background-color: $bg-primary;
+  &__thumbnail-container {
+    height: 18rem;
+    background-size: cover;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  &__thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
   &__info {
     padding: 1.6rem 2.2rem 2.2rem 2.2rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    // align-items: start;
+
     &-head {
       display: flex;
       align-items: center;

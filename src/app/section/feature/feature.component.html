@@ -2,7 +2,9 @@
   <h2 class="heading-secondary">Enjoy listening</h2>
   <div class="container feature">
     <div class="audio-card" *ngFor="let card of cardData; let i = index;">
-      <img class="audio-card__thumbnail" src="../assets/images/hero.jpeg" alt="">
+      <div class="audio-card__thumbnail-container">
+        <img class="audio-card__thumbnail" [src]="card.thumbnailUrl" alt="">
+      </div>
       <div class="audio-card__info">
         <div class="audio-card__meta-tags">
           <span *ngFor="let tag of card.tags">{{ tag }}</span>
