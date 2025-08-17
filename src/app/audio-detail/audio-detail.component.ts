@@ -63,13 +63,13 @@ export class AudioDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         return this.audioService.getAudioById(this.id);
       })
     ).subscribe({
-      next: (audio) => {
+      next: (audio: any) => {
         this.selectedAudio = audio;
         this.isLoading = false;
         this.cdr.detectChanges();
         setTimeout(() => this.initializeAudio());
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Error loading audio:', error);
         this.hasError = true;
         this.isLoading = false;
@@ -163,7 +163,7 @@ export class AudioDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     
     // Set up proper event listeners
     audio.addEventListener('loadedmetadata', () => this.onMetadataLoaded());
-    audio.addEventListener('error', (e) => console.error('Audio error:', e));
+    audio.addEventListener('error', (e: any) => console.error('Audio error:', e));
     audio.addEventListener('canplay', () => this.onCanPlay());
     
     // If metadata is already loaded
@@ -227,7 +227,7 @@ export class AudioDetailComponent implements OnInit, AfterViewInit, OnDestroy {
             this.isPlaying = true;
             this.startSmoothProgressTracking();
           })
-          .catch(error => {
+          .catch((error: any) => {
             console.error('Play failed:', error);
             this.isPlaying = false;
           });
