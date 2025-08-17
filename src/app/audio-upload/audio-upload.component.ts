@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AudioService } from '../services/audio.service';
 import { CommonModule } from '@angular/common';
 
@@ -12,7 +12,7 @@ interface UploadedFile {
 
 @Component({
   selector: 'app-audio-upload',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, FormsModule],
   templateUrl: './audio-upload.component.html',
   styleUrl: './audio-upload.component.scss'
 })
@@ -39,8 +39,9 @@ export class AudioUploadComponent {
     tags: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
     thumbnail: new FormControl<File | null>(null, Validators.required),
-    audioFile: new FormControl<File | null>(null, Validators.required)
-  });
+    audioFile: new FormControl<File | null>(null, Validators.required),
+    duration: new FormControl('', Validators.required)
+  });  
 
   get topic() {
     return this.audioUpload.get('topic');
@@ -67,19 +68,13 @@ export class AudioUploadComponent {
   }
   
   isFormValid() {
-    console.log(this.audioUpload.invalid || !this.hasFile('image') || !this.hasFile('audio'));
-    
-    return this.audioUpload.invalid || !this.hasFile('image') || !this.hasFile('audio')
+    return this.audioUpload.invalid || !this.hasFile('image') || !this.hasFile('audio') || this.tagList.length === 0;
   }
   
-
   async onSubmit() {
-    console.log("asdfs");
-    
     if (!this.audioUpload.valid) return;
 
     const formValue = this.audioUpload.value;
-
     const tagsArray = this.tagList;
 
     const formData = new FormData();
@@ -88,8 +83,12 @@ export class AudioUploadComponent {
       topic: formValue.topic,
       speakerName: formValue.speaker,
       description: formValue.description || '',
-      tags: tagsArray
+      tags: tagsArray,
+      duration: formValue.duration
     };
+
+    console.log(metadata);
+    
 
     const metadataBlob = new Blob([JSON.stringify(metadata)], {
       type: 'application/json'
@@ -104,23 +103,14 @@ export class AudioUploadComponent {
       formData.append('audioFile', formValue.audioFile);
     }
 
-    formData.forEach((value, key) => {
-      console.log(key, value);
-    });
-
-    console.log("on submit");
-    
-
     this.audioService.saveAudioMetadata(formData).subscribe({
       next: (response: any) => {
-        console.log('Upload successful', response);
         this.resetForm();
       }, 
       error: (err: any) => {
         console.error('Upload failed', err);
       }
     })
-    
   }
 
   onFileSelected(event: Event, fileType: 'image' | 'audio') {
@@ -152,6 +142,32 @@ export class AudioUploadComponent {
     this.audioUpload.patchValue({
       [controlName]: file
     });
+
+    if (fileType === 'audio') {
+      const audio = document.createElement('audio');
+      audio.src = URL.createObjectURL(file);
+
+      audio.addEventListener('loadedmetadata', () => {
+        const durationInSeconds = audio.duration;
+        const formattedDuration = this.formatDuration(durationInSeconds);
+  
+        // Patch duration to form
+        this.audioUpload.patchValue({
+          duration: formattedDuration
+        });
+      });
+    }
+  }
+
+  private formatDuration(seconds: number): string {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.round((seconds % 3600) / 60);
+  
+    if (h > 0) {
+      return `${h} hr ${m} mins`;
+    } else {
+      return `${m} mins`;
+    }
   }
 
   private formatFileSize(bytes: number): string {
@@ -164,10 +180,14 @@ export class AudioUploadComponent {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 
+  // FIXED: Correct form control patching
   removeFile(fileType: 'image' | 'audio'): void {
     this.uploadedFiles[fileType] = null;
+    
+    // Fix: Use correct control names
+    const controlName = fileType === 'image' ? 'thumbnail' : 'audioFile';
     this.audioUpload.patchValue({
-      [`${fileType}File`]: ''
+      [controlName]: null
     });
     
     // Reset file input
@@ -194,7 +214,6 @@ export class AudioUploadComponent {
     this.dragOver[fileType] = true;
   }
 
-  // Handle drag leave events
   onDragLeave(event: DragEvent, fileType: 'image' | 'audio'): void {
     event.preventDefault();
     this.dragOver[fileType] = false;
@@ -225,55 +244,110 @@ export class AudioUploadComponent {
     if (event.key === ',' || event.key === "Enter") {
       event.preventDefault();
       this.addTag();
+      return;
     }
-
+  
     if (event.key === 'Backspace' && this.tagsInputValue === '' && this.tagList.length > 0) {
       this.removeTag(this.tagList.length - 1);
     }
   }
 
-  onInput(event: any): void {
-    const value = event.target.value;
+  onPaste(event: ClipboardEvent): void {
+    event.preventDefault();
+    const pastedData = event.clipboardData?.getData('text') || '';
+    
+    // Process pasted content
+    const tags = pastedData.split(',')
+      .map(tag => tag.trim())
+      .filter(tag => tag.length > 0);
+  
+    // Add unique tags
+    tags.forEach(tag => {
+      if (!this.tagList.includes(tag)) {
+        this.tagList.push(tag.charAt(0).toUpperCase() + tag.slice(1));
+      }
+    });
+    
+    this.updateTagsFormControl();
+    this.tagsInputValue = '';
+    
+    // Force clear the input field
+    setTimeout(() => {
+      const inputElement = document.getElementById('tags') as HTMLInputElement;
+      if (inputElement) {
+        inputElement.value = '';
+      }
+    }, 0);
+  }
 
+  onInput(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    
+    // Handle comma input - automatically add tags when comma is typed
     if (value.includes(',')) {
-      const textBeforeComma = value.split(',')[0].trim();
-
-      if (textBeforeComma) {
-        this.tagList.push(textBeforeComma);
+      const parts = value.split(',');
+      
+      // Add all complete tags (all parts except the last one)
+      for (let i = 0; i < parts.length - 1; i++) {
+        const tag = parts[i].trim();
+        if (tag && !this.tagList.includes(tag)) {
+          this.tagList.push(tag.charAt(0).toUpperCase() + tag.slice(1));
+        }
       }
-
-      const remainingText = value.split(',').slice(1).join(',').trim();
-      this.tagsInputValue = remainingText;
-
-      if (remainingText.includes(',')) {
-        setTimeout(() => this.onInput({ target: { value: remainingText } }));
+      
+      // Keep only the text after the last comma
+      this.tagsInputValue = parts[parts.length - 1].trim();
+      this.updateTagsFormControl();
+      
+      // Force clear input if no remaining text
+      if (this.tagsInputValue === '') {
+        setTimeout(() => {
+          target.value = '';
+        }, 0);
       }
-
+    } else {
+      // Normal typing - just update the input value
+      this.tagsInputValue = value;
     }
   }
 
   addTag(): void {
     const trimmedValue = this.tagsInputValue.trim();
     if (trimmedValue && !this.tagList.includes(trimmedValue)) {
-      this.tagList.push(trimmedValue);
+      this.tagList.push(trimmedValue.charAt(0).toUpperCase() + trimmedValue.slice(1));
       this.tagsInputValue = '';
+      this.updateTagsFormControl();
+      
+      // Force clear the input field
+      setTimeout(() => {
+        const inputElement = document.getElementById('tags') as HTMLInputElement;
+        if (inputElement) {
+          inputElement.value = '';
+        }
+      }, 0);
     }
   }
 
   private updateTagsFormControl(): void {
-    // Update the form control value with current tags
-    const tagsString = this.tagList.join(',');
+    // Update the form control value with current tags for validation
+    const tagsString = this.tagList.length > 0 ? this.tagList.join(',') : '';
     this.audioUpload.patchValue({
-      tags: tagsString || ''
+      tags: tagsString
     });
+
+    this.audioUpload.get('tags')?.markAsTouched();
   }
 
   removeTag(index: number): void {
     this.tagList.splice(index, 1);
+    this.updateTagsFormControl();
   }
 
   private resetForm(): void {
     this.audioUpload.reset();
+    this.tagList = [];
+    this.tagsInputValue = '';
     this.uploadedFiles = {
       image: null,
       audio: null
@@ -286,5 +360,4 @@ export class AudioUploadComponent {
     if (imageInput) imageInput.value = '';
     if (audioInput) audioInput.value = '';
   }
-
 }

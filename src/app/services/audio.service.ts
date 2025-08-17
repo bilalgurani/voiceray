@@ -10,24 +10,14 @@ export class AudioService {
   private http = inject(HttpClient);
 
   getAudioById(id: number): Observable<any> {
-    return this.http.get(`http://localhost:8080/api/audio/${id}`)
+    return this.http.get(`https://voiceray-service.onrender.com/api/audio/${id}`)
   }
 
-  // getAllAudio(): Observable<AudioCard[]> {
-  //   return of(this.audioList);
-  // }
-
-  getBackBlaze(): Observable<any> {
-    return this.http.get("https://f005.backblazeb2.com/file/voiceray-audios/siraj-moulana.mp3",
-      { responseType: 'blob' }
-    );
+  getAllMetadata(): Observable<any> {
+    return this.http.get('https://voiceray-service.onrender.com/api/audio/allMetadata');
   }
 
   saveAudioMetadata(formData: FormData) {
-    return this.http.post("http://localhost:8080/api/audio/upload", formData)
-  }
-
-  getAudioFile(): Observable<any> {
-    return this.http.get("http://localhost:8080/api/audio/72f66f1d-2403-40d3-8f47-c8d515c97b53")
+    return this.http.post("https://voiceray-service.onrender.com/api/audio/upload", formData)
   }
 }

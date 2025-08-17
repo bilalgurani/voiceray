@@ -15,15 +15,16 @@
       
       <div class="input-container">
         <label for="tags">Tags</label>
-        <input maxlength="30" 
-        placeholder="Enter Tags separated by comma (,)" 
-        type="text" name="tags" 
-        id="tags" 
-        formControlName="tags"
-        [value]="tagsInputValue"
-        (keydown)="onKeyDown($event)"
-        (input)="onInput($event)"
-        #tagsInput
+        <input
+          placeholder="Enter Tags separated by comma (,)" 
+          type="text" 
+          name="tags" 
+          id="tags" 
+          (input)="onInput($event)"
+          (keydown)="onKeyDown($event)"
+          (blur)="addTag()"
+          (paste)="onPaste($event)"
+          #tagsInput
         >
         <div class="tags-container" *ngIf="tagList.length > 0">
           <div class="tag" *ngFor="let tag of tagList; let i = index">

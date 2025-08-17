@@ -9,7 +9,7 @@
         </div>
         <div class="audio-card__info-head">
           <h3 class="heading-tertiary">{{ card.topic }}</h3>
-          <a href="#" class="speaker">by {{ card.speaker }}</a>
+          <a href="#" class="speaker">by {{ card.speakerName }}</a>
         </div>
         <div class="hr-line"></div>
         <div class="audio-card__meta-info">
@@ -17,56 +17,19 @@
             <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" id="Calendar-Schedule-Fill--Streamline-Remix-Fill" height="20" width="20">
               <path d="M4.666666666666666 0.6666666666666666v1.3333333333333333H2c-0.36818666666666666 0 -0.6666666666666666 0.29847999999999997 -0.6666666666666666 0.6666666666666666v10.666666666666666c0 0.36819999999999997 0.29847999999999997 0.6666666666666666 0.6666666666666666 0.6666666666666666h5.169733333333333C6.437813333333333 13.086933333333334 6 11.927933333333332 6 10.666666666666666c0 -2.9455333333333336 2.3878 -5.333333333333333 5.333333333333333 -5.333333333333333 1.2612666666666665 0 2.4202666666666666 0.4378133333333333 3.333333333333333 1.1697533333333332V2.6666666666666665c0 -0.36818666666666666 -0.29846666666666666 -0.6666666666666666 -0.6666666666666666 -0.6666666666666666h-2.6666666666666665V0.6666666666666666h-1.3333333333333333v1.3333333333333333H6V0.6666666666666666H4.666666666666666Zm10.666666666666666 10c0 2.209133333333333 -1.7908666666666666 4 -4 4s-4 -1.7908666666666666 -4 -4 1.7908666666666666 -4 4 -4 4 1.7908666666666666 4 4Zm-4.666666666666666 -2.6666666666666665v2.9428l1.5286 1.5286 0.9427999999999999 -0.9427999999999999L12 10.390533333333334V8h-1.3333333333333333Z" stroke-width="0.6667"></path>
             </svg>
-            {{ card.uploadeTime }}
-            <!-- 2 hours ago -->
+            {{ card.uploadDateTime | timeAgo }}
           </span>
           <span>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="Time-Clock-Circle--Streamline-Ultimate" height="20" width="20">
             <path d="M12 0a12 12 0 1 0 12 12A12 12 0 0 0 12 0Zm5.2 17.22a1 1 0 0 1 -1.42 0.06l-5 -4.54a1 1 0 0 1 -0.28 -0.74V6.5a1 1 0 0 1 2 0v5.06l4.63 4.25a1 1 0 0 1 0.07 1.41Z" stroke-width="1"></path>
           </svg>
-          {{ card.duration }} mins
+          {{ card.duration }}
           </span>
         </div>
         <div class="audio-card__btns">
-          <a [routerLink]="['/audio', i + 1]" class="btn btn--full">Listen Audio</a>
+          <a [routerLink]="['/audio', card.id]" class="btn btn--full">Listen Audio</a>
         </div>
       </div>
     </div>
   </div>  
-  <!-- <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 128 128" style="enable-background:new 0 0 128 128;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:#FFFFFF;}
-</style>
-<rect x="297.7" y="61.1" transform="matrix(0.2499 -0.9683 0.9683 0.2499 161.1461 337.964)" class="st0" width="2" height="7.8"/>
-<rect x="286.5" y="52.2" transform="matrix(0.2757 -0.9613 0.9613 0.2757 142.4082 325.9646)" class="st0" width="2" height="32.6"/>
-<rect x="275.4" y="43.9" transform="matrix(0.307 -0.9517 0.9517 0.307 122.1229 313.5442)" class="st0" width="2" height="58"/>
-<rect x="264.4" y="36.3" transform="matrix(0.346 -0.9383 0.9383 0.346 99.7777 300.4211)" class="st0" width="2" height="84.7"/>
-<rect x="253.6" y="29.8" transform="matrix(0.3952 -0.9186 0.9186 0.3952 74.6297 286.0815)" class="st0" width="2" height="113.2"/>
-<rect x="243.1" y="24.7" transform="matrix(0.4587 -0.8886 0.8886 0.4587 45.6136 269.5645)" class="st0" width="2" height="145.4"/>
-<rect x="233.1" y="21.6" transform="matrix(0.5422 -0.8403 0.8403 0.5422 11.2563 248.9903)" class="st0" width="2" height="185.1"/>
-<rect x="224.3" y="21.8" transform="matrix(0.6522 -0.7581 0.7581 0.6522 -30.1803 220.6339)" class="st0" width="2" height="242.9"/>
-<rect x="208.4" y="30.1" transform="matrix(0.7905 -0.6125 0.6125 0.7905 -73.7306 168.4783)" class="st0" width="2" height="323.9"/>
-<rect x="135.7" y="54.7" transform="matrix(0.9325 -0.3613 0.3613 0.9325 -60.1333 62.3501)" class="st0" width="2" height="274.5"/>
-<rect x="63" y="64" class="st0" width="2" height="256"/>
-<rect x="-146" y="191" transform="matrix(0.3613 -0.9325 0.9325 0.3613 -184.5814 114.5362)" class="st0" width="274.5" height="2"/>
-<rect x="-243.3" y="191" transform="matrix(0.6124 -0.7906 0.7906 0.6124 -183.3372 10.0955)" class="st0" width="323.9" height="2"/>
-<rect x="-218.8" y="142.2" transform="matrix(0.7579 -0.6524 0.6524 0.7579 -116.9969 -28.8343)" class="st0" width="242.9" height="2"/>
-<rect x="-198.6" y="113.2" transform="matrix(0.8402 -0.5422 0.5422 0.8402 -78.8603 -39.3017)" class="st0" width="185.1" height="2"/>
-<rect x="-188.8" y="96.3" transform="matrix(0.8887 -0.4585 0.4585 0.8887 -57.5511 -42.3798)" class="st0" width="145.4" height="2"/>
-<rect x="-183.2" y="85.4" transform="matrix(0.9187 -0.3949 0.3949 0.9187 -44.3961 -42.9611)" class="st0" width="113.2" height="2"/>
-<rect x="-179.7" y="77.6" transform="matrix(0.9384 -0.3457 0.3457 0.9384 -35.6515 -42.6358)" class="st0" width="84.7" height="2"/>
-<rect x="-177.4" y="71.9" transform="matrix(0.9517 -0.307 0.307 0.9517 -29.5472 -42.0273)" class="st0" width="58" height="2"/>
-<rect x="-175.8" y="67.5" transform="matrix(0.9612 -0.2759 0.2759 0.9612 -25.0919 -41.3528)" class="st0" width="32.6" height="2"/>
-<rect x="-174.6" y="64" transform="matrix(0.9682 -0.2501 0.2501 0.9682 -21.6699 -40.6219)" class="st0" width="7.8" height="2"/>
-<rect x="-174.9" y="69.6" class="st0" width="477.8" height="2"/>
-<rect x="-175.7" y="77.3" class="st0" width="479.3" height="2"/>
-<rect x="-176.6" y="87.1" class="st0" width="481.2" height="2"/>
-<rect x="-177.8" y="99.8" class="st0" width="483.6" height="2"/>
-<rect x="-179.4" y="117" class="st0" width="486.9" height="2"/>
-<rect x="-181.8" y="141.8" class="st0" width="491.6" height="2"/>
-<rect x="-185.5" y="180.3" class="st0" width="499" height="2"/>
-<rect x="-192" y="248.6" class="st0" width="512" height="2"/>
-<rect x="-174.4" y="63" class="st0" width="476.8" height="2"/>
-</svg> -->
 </section>
