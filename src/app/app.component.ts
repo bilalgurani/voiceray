@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { HeaderComponent } from "./header/header.component";
 import { RouterOutlet } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
+import Lenis from '@studio-freight/lenis';
+import { LenisService } from './services/lenis.service';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +12,17 @@ import { Meta, Title } from '@angular/platform-browser';
   styleUrl: './app.component.scss',
   imports: [CommonModule, HeaderComponent, RouterOutlet]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  private lenis: Lenis | null = null;
+
+  private lenisService = inject(LenisService);
+
   constructor(private meta: Meta, private title: Title) {
     this.setMetaTags();
+  }
+
+  ngOnInit() {
+    this.lenisService.init();
   }
 
   setMetaTags() {
